@@ -1,0 +1,24 @@
+{
+  "name": "pod-sdk/pod-virtual-account-service",
+  "version": "1.0.0",
+  "type": "library",
+  "keywords": ["sdk", "pod sdk", "pod sdk virtual account service"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Elham Keshtgar",
+      "email": "podsdk@fanap.ir"
+    }
+  ],
+  "description": "POD SDK Virtual Account Service",
+
+  "require": {
+    "ext-openssl": "*",
+    "pod-sdk/pod-base-service" : "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Pod\\Virtual\\Account\\Service\\" : "src/"
+    }
+  }
+}

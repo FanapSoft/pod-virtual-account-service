@@ -1,0 +1,1268 @@
+{
+  "getBuyCreditLink": {
+    "header": {},
+    "query": {
+      "type": "object",
+      "properties": {
+        "redirectUri": {
+          "type": "string",
+          "format" : "uri",
+          "title": "آدرس بازگشت",
+          "description": "آدرسی است که بعد از پرداخت کاربر به آن هدایت می گردد"
+        },
+        "callUri": {
+          "type": "string",
+          "title": "بعد از پرداخت این آدرس صدا زده می شود"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+
+  "getBuyCreditByAmountLink": {
+    "header": {},
+    "query": {
+      "type": "object",
+      "properties": {
+        "redirectUri": {
+          "type": "string",
+          "format" : "uri",
+          "title": "آدرس بازگشت",
+          "description": "آدرسی است که بعد از پرداخت کاربر به آن هدایت می گردد"
+        },
+        "callUri": {
+          "type": "string",
+          "title": "بعد از پرداخت این آدرس صدا زده می شود"
+        },
+        "amount": {
+          "type": "number",
+          "title": "مقدار پرداختی"
+        }
+      },
+      "required": ["amount"],
+      "additionalProperties": false
+    }
+  },
+
+  "issueCreditInvoiceAndGetHash": {
+        "header": {
+          "type": "object",
+          "properties": {
+            "_token_":{
+              "type": "string",
+              "minLength" : 1,
+              "title": "توکن احراز هویت",
+              "description": "توکن احراز هویت"
+            },
+            "_token_issuer_": {
+              "type": "integer",
+              "enum": [0, 1]
+            }
+          },
+          "required": ["_token_issuer_","_token_"],
+          "additionalProperties": false
+        },
+        "form_params": {
+            "type": "object",
+            "properties": {
+              "amount": {
+                "type": "number"
+              },
+              "userId": {
+                "type": "integer"
+              },
+              "billNumber": {
+                "type": "string"
+              },
+              "wallet": {
+                "type": "string"
+              },
+              "redirectUrl": {
+                "type": "string",
+                "format": "uri"
+              },
+              "scVoucherHash": {
+                "type": "array",
+                "title": "کد تخفیف برای فراخوانی سرویس کال",
+                "description": "کد تخفیف برای فراخوانی سرویس کال",
+                "items": {
+                    "type": "string"
+                }
+              },
+              "scApiKey": {
+                "type": "string",
+                "title": "توکن برای فراخوانی سرویس کال"
+              }
+            },
+            "required": ["amount", "userId", "billNumber", "wallet", "redirectUrl"],
+            "additionalProperties": false
+        }
+    },
+
+  "verifyCreditInvoice": {
+      "header": {
+        "type": "object",
+        "properties": {
+          "_token_":{
+            "type": "string",
+            "minLength" : 1,
+            "title": "توکن احراز هویت",
+            "description": "توکن احراز هویت"
+          },
+          "_token_issuer_": {
+            "type": "integer",
+            "enum": [0, 1]
+          }
+        },
+        "required": ["_token_issuer_","_token_"],
+        "additionalProperties": false
+      },
+      "form_params": {
+        "type": "object",
+        "properties": {
+          "billNumber": {
+            "type": "string",
+            "title": "شماره قبض"
+          },
+          "id": {
+              "type": "integer"
+          },
+          "scVoucherHash": {
+              "type": "array",
+              "title": "کد تخفیف برای فراخوانی سرویس کال",
+              "description": "کد تخفیف برای فراخوانی سرویس کال",
+              "items": {
+                  "type": "string"
+              }
+          },
+          "scApiKey": {
+              "type": "string",
+              "title": "توکن برای فراخوانی سرویس کال"
+          }
+        },
+        "required": ["billNumber"],
+        "additionalProperties": false
+      }
+    },
+
+  "transferFromOwnAccounts": {
+    "header": {
+      "type": "object",
+      "properties": {
+        "_token_":{
+          "type": "string",
+          "minLength" : 1,
+          "title": "توکن احراز هویت",
+          "description": "توکن احراز هویت"
+        },
+        "_token_issuer_": {
+          "type": "integer"
+        }
+      },
+      "required": ["_token_issuer_","_token_"],
+      "additionalProperties": false
+    },
+    "query": {
+      "type": "object",
+      "properties": {
+        "scVoucherHash": {
+          "type": "array",
+          "title": "کد تخفیف برای فراخوانی سرویس کال",
+          "description": "کد تخفیف برای فراخوانی سرویس کال",
+          "items": {
+            "type": "string"
+          }
+        },
+        "scApiKey": {
+          "type": "string",
+          "title": "توکن برای فراخوانی سرویس کال"
+        },
+        "guildAmount": {
+          "type": "array",
+          "items": {
+            "guildCode": {
+              "type": "string"
+            },
+            "amount": {
+              "type": "number"
+            }
+          }
+        },
+        "customerAmount": {
+          "type": "number"
+        },
+        "currencyCode": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "wallet": {
+          "type": "string"
+        },
+        "uniqueId": {
+          "type": "string"
+        }
+      },
+      "required": ["guildAmount"],
+      "additionalProperties": false
+    }
+  },
+
+  "transferFromOwnAccountsList": {
+    "header": {
+      "type": "object",
+      "properties": {
+        "_token_":{
+          "type": "string",
+          "minLength" : 1,
+          "title": "توکن احراز هویت",
+          "description": "توکن احراز هویت"
+        },
+        "_token_issuer_": {
+          "type": "integer",
+          "enum": [0, 1]
+        }
+      },
+      "required": ["_token_issuer_","_token_"],
+      "additionalProperties": false
+    },
+    "query": {
+      "type": "object",
+      "properties": {
+        "scVoucherHash": {
+          "type": "array",
+          "title": "کد تخفیف برای فراخوانی سرویس کال",
+          "description": "کد تخفیف برای فراخوانی سرویس کال",
+          "items": {
+            "type": "string"
+          }
+        },
+        "scApiKey": {
+          "type": "string",
+          "title": "توکن برای فراخوانی سرویس کال"
+        },
+        "uniqueId": {
+          "type": "string"
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "fromDate": {
+          "type": "string",
+          "title": "از تاریخ صدور ( به صورت شمسی )",
+          "pattern": "^[1][3-5][0-9]{2}\/([1-9]|0[1-9]|1[0-2])\/([1-2][0-9]|0[1-9]|3[0-1]|[1-9])( (2[0-3]|[01]?[0-9]):[0-5]?[0-9](:[0-5]?[0-9])?)?$",
+          "pattern_description": "تاریخ به صورت yyyy/mm/dd وارد شود"
+        },
+        "toDate": {
+          "type": "string",
+          "title": "تا تاریخ صدور ( به صورت شمسی )",
+          "pattern": "^[1][3-5][0-9]{2}\/([1-9]|0[1-9]|1[0-2])\/([1-2][0-9]|0[1-9]|3[0-1]|[1-9])( (2[0-3]|[01]?[0-9]):[0-5]?[0-9](:[0-5]?[0-9])?)?$",
+          "pattern_description": "تاریخ به صورت yyyy/mm/dd وارد شود"
+        }
+      },
+      "required": ["offset", "size"],
+      "additionalProperties": false
+    }
+  },
+
+  "transferToContact": {
+    "header": {
+      "type": "object",
+      "properties": {
+        "_token_":{
+          "type": "string",
+          "minLength" : 1,
+          "title": "توکن احراز هویت",
+          "description": "توکن احراز هویت"
+        },
+        "_token_issuer_": {
+          "type": "integer",
+          "enum": [0, 1]
+        }
+      },
+      "required": ["_token_issuer_","_token_"],
+      "additionalProperties": false
+    },
+    "form_params": {
+        "type": "object",
+        "properties": {
+            "scVoucherHash": {
+                "type": "array",
+                "title": "کد تخفیف برای فراخوانی سرویس کال",
+                "description": "کد تخفیف برای فراخوانی سرویس کال",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "scApiKey": {
+                "type": "string",
+                "title": "توکن برای فراخوانی سرویس کال"
+            },
+          "contactId": {
+            "type": "integer"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "wallet": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "uniqueId": {
+            "type": "string"
+          }
+        },
+      "required": ["contactId", "amount"],
+      "additionalProperties": false
+    }
+  },
+
+  "transferToContactList": {
+    "header": {
+      "type": "object",
+      "properties": {
+        "_token_":{
+          "type": "string",
+          "minLength" : 1,
+          "title": "توکن احراز هویت",
+          "description": "توکن احراز هویت"
+        },
+        "_token_issuer_": {
+          "type": "integer",
+          "enum": [0, 1]
+        }
+      },
+      "required": ["_token_issuer_","_token_"],
+      "additionalProperties": false
+    },
+    "form_params": {
+        "type": "object",
+        "properties": {
+          "size" : {
+              "type": "integer",
+              "minimum": 1,
+              "description" : "تعداد آیتم بازگشتی که باید به صورت پارامتر وارد شود و مقدار پیش فرض آن 50 است."
+          },
+          "offset" : {
+              "type": "integer",
+              "minimum": 0
+          },
+          "scVoucherHash": {
+              "type": "array",
+              "title": "کد تخفیف برای فراخوانی سرویس کال",
+              "description": "کد تخفیف برای فراخوانی سرویس کال",
+              "items": {
+                  "type": "string"
+              }
+          },
+            "scApiKey": {
+                "type": "string",
+                "title": "توکن برای فراخوانی سرویس کال"
+            },
+          "contactId": {
+            "type": "integer"
+          },
+          "fromAmount": {
+            "type": "number",
+            "minimum": 0
+
+          },
+          "toAmount": {
+            "type": "number",
+            "minimum": 0
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "uniqueId": {
+            "type": "string"
+          },
+          "fromDate": {
+            "type": "string",
+            "pattern": "^[1][3-5][0-9]{2}\/([1-9]|0[1-9]|1[0-2])\/([1-2][0-9]|0[1-9]|3[0-1]|[1-9])( (2[0-3]|[01]?[0-9]):[0-5]?[0-9](:[0-5]?[0-9])?)?$"
+          },
+          "toDate": {
+            "type": "string",
+            "pattern": "^[1][3-5][0-9]{2}\/([1-9]|0[1-9]|1[0-2])\/([1-2][0-9]|0[1-9]|3[0-1]|[1-9])( (2[0-3]|[01]?[0-9]):[0-5]?[0-9](:[0-5]?[0-9])?)?$"
+          }
+        },
+      "required": ["offset", "size"],
+      "additionalProperties": false
+    }
+  },
+
+  "follow": {
+    "header": {
+      "type": "object",
+      "properties": {
+        "_token_":{
+          "type": "string",
+          "minLength" : 1,
+          "title": "توکن احراز هویت",
+          "description": "توکن احراز هویت"
+        },
+        "_token_issuer_": {
+          "type": "integer",
+          "enum": [0, 1]
+        }
+      },
+      "required": ["_token_issuer_","_token_"],
+      "additionalProperties": false
+    },
+    "form_params": {
+        "type": "object",
+        "properties": {
+          "scVoucherHash": {
+              "type": "array",
+              "title": "کد تخفیف برای فراخوانی سرویس کال",
+              "description": "کد تخفیف برای فراخوانی سرویس کال",
+              "items": {
+                  "type": "string"
+              }
+          },
+          "scApiKey": {
+              "type": "string",
+              "title": "توکن برای فراخوانی سرویس کال"
+          },
+          "businessId": {
+            "type": "integer"
+          },
+          "follow": {
+            "type": "string"
+          }
+        },
+      "required": ["businessId", "follow"],
+      "additionalProperties": false
+    }
+  },
+
+  "getFollowers": {
+    "header": {
+      "type": "object",
+      "properties": {
+        "_token_":{
+          "type": "string",
+          "minLength" : 1,
+          "title": "توکن احراز هویت",
+          "description": "توکن احراز هویت"
+        },
+        "_token_issuer_": {
+          "type": "integer",
+          "enum": [0, 1]
+        }
+      },
+      "required": ["_token_issuer_","_token_"],
+      "additionalProperties": false
+    },
+    "form_params": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "integer",
+          "minimum": 0,
+          "description" : "شماره صفحه که باید به صورت پارامتر وارد شود. مقدار پیش فرض صفر است."
+        },
+        "size" : {
+          "type": "integer",
+          "minimum": 1,
+          "description" : "تعداد آیتم بازگشتی که باید به صورت پارامتر وارد شود و مقدار پیش فرض آن 50 است."
+        },
+        "scVoucherHash": {
+          "type": "array",
+          "title": "کد تخفیف برای فراخوانی سرویس کال",
+          "description": "کد تخفیف برای فراخوانی سرویس کال",
+          "items": {
+              "type": "string"
+          }
+        },
+        "scApiKey": {
+          "type": "string",
+          "title": "توکن برای فراخوانی سرویس کال"
+        }
+      },
+      "required": ["offset", "size"],
+      "additionalProperties": false
+    }
+  },
+
+  "getBusiness": {
+    "header": {
+      "type": "object",
+      "properties": {
+        "_token_":{
+          "type": "string",
+          "minLength" : 1,
+          "title": "توکن احراز هویت",
+          "description": "توکن احراز هویت"
+        },
+        "_token_issuer_": {
+          "type": "integer",
+          "enum": [0, 1]
+        }
+      },
+      "required": ["_token_issuer_","_token_"],
+      "additionalProperties": false
+    },
+    "form_params": {
+      "type": "object",
+      "properties": {
+        "scVoucherHash": {
+          "type": "array",
+          "title": "کد تخفیف برای فراخوانی سرویس کال",
+          "description": "کد تخفیف برای فراخوانی سرویس کال",
+          "items": {
+              "type": "string"
+          }
+        },
+        "scApiKey": {
+          "type": "string",
+          "title": "توکن برای فراخوانی سرویس کال"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+
+  "transferToFollower": {
+    "header": {
+      "type": "object",
+      "properties": {
+        "_token_":{
+          "type": "string",
+          "minLength" : 1,
+          "title": "توکن احراز هویت",
+          "description": "توکن احراز هویت"
+        },
+        "_token_issuer_": {
+          "type": "integer",
+          "enum": [0, 1]
+        }
+      },
+      "required": ["_token_issuer_","_token_"],
+      "additionalProperties": false
+    },
+    "form_params": {
+      "type": "object",
+      "properties": {
+        "scVoucherHash": {
+            "type": "array",
+            "title": "کد تخفیف برای فراخوانی سرویس کال",
+            "description": "کد تخفیف برای فراخوانی سرویس کال",
+            "items": {
+                "type": "string"
+            }
+        },
+        "scApiKey": {
+            "type": "string",
+            "title": "توکن برای فراخوانی سرویس کال"
+        },
+        "guildCode": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number"
+        },
+        "userId": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        },
+        "currencyCode": {
+          "type": "string"
+        },
+        "wallet": {
+          "type": "string"
+        },
+        "uniqueId": {
+          "type": "string"
+        }
+      },
+      "required": ["guildCode", "amount", "userId", "description", "wallet"],
+      "additionalProperties": false
+    }
+  },
+
+  "transferToFollowerAndCashout": {
+    "header": {
+      "type": "object",
+      "properties": {
+        "_token_":{
+          "type": "string",
+          "minLength" : 1,
+          "title": "توکن احراز هویت",
+          "description": "توکن احراز هویت"
+        },
+        "_token_issuer_": {
+          "type": "integer",
+          "enum": [0, 1]
+        }
+      },
+      "required": ["_token_issuer_","_token_"],
+      "additionalProperties": false
+    },
+    "form_params": {
+        "type": "object",
+        "properties": {
+          "scVoucherHash": {
+            "type": "array",
+            "title": "کد تخفیف برای فراخوانی سرویس کال",
+            "description": "کد تخفیف برای فراخوانی سرویس کال",
+            "items": {
+                "type": "string"
+            }
+          },
+          "scApiKey": {
+              "type": "string",
+              "title": "توکن برای فراخوانی سرویس کال"
+          },
+          "guildCode": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "userId": {
+            "type": "integer"
+          },
+          "description": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "wallet": {
+            "type": "string"
+          },
+          "uniqueId": {
+            "type": "string"
+          },
+          "toolCode": {
+            "type": "string",
+            "enum": ["SETTLEMENT_TOOL_SATNA", "SETTLEMENT_TOOL_PAYA", "SETTLEMENT_TOOL_CARD"]
+          }
+        },
+        "required": ["guildCode", "amount", "userId", "description", "wallet"],
+        "additionalProperties": false
+      }
+  },
+
+  "transferToFollowerList": {
+    "header": {
+      "type": "object",
+      "properties": {
+        "_token_":{
+          "type": "string",
+          "minLength" : 1,
+          "title": "توکن احراز هویت",
+          "description": "توکن احراز هویت"
+        },
+        "_token_issuer_": {
+          "type": "integer",
+          "enum": [0, 1]
+        }
+      },
+      "required": ["_token_issuer_","_token_"],
+      "additionalProperties": false
+    },
+    "form_params": {
+      "type": "object",
+      "properties": {
+        "scVoucherHash": {
+          "type": "array",
+          "title": "کد تخفیف برای فراخوانی سرویس کال",
+          "description": "کد تخفیف برای فراخوانی سرویس کال",
+          "items": {
+            "type": "string"
+          }
+        },
+        "scApiKey": {
+          "type": "string",
+          "title": "توکن برای فراخوانی سرویس کال"
+        },
+        "userId": {
+          "type": "integer"
+        },
+        "guildCode": {
+          "type": "string"
+        },
+        "wallet": {
+          "type": "string"
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "contactId": {
+          "type": "integer"
+        },
+        "fromAmount": {
+          "type": "number",
+          "minimum": 0
+        },
+        "toAmount": {
+          "type": "number",
+          "minimum": 0
+        },
+        "currencyCode": {
+          "type": "string"
+        },
+        "uniqueId": {
+          "type": "string"
+        },
+        "fromDate": {
+          "type": "string",
+          "title": "از تاریخ صدور ( به صورت شمسی )",
+          "pattern": "^[1][3-5][0-9]{2}\/([1-9]|0[1-9]|1[0-2])\/([1-2][0-9]|0[1-9]|3[0-1]|[1-9])( (2[0-3]|[01]?[0-9]):[0-5]?[0-9](:[0-5]?[0-9])?)?$",
+          "pattern_description": "تاریخ به صورت yyyy/mm/dd وارد شود"
+        },
+        "toDate": {
+          "type": "string",
+          "title": "تا تاریخ صدور ( به صورت شمسی )",
+          "pattern": "^[1][3-5][0-9]{2}\/([1-9]|0[1-9]|1[0-2])\/([1-2][0-9]|0[1-9]|3[0-1]|[1-9])( (2[0-3]|[01]?[0-9]):[0-5]?[0-9](:[0-5]?[0-9])?)?$",
+          "pattern_description": "تاریخ به صورت yyyy/mm/dd وارد شود"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+
+  "transferByInvoice": {
+    "header": {
+      "type": "object",
+      "properties": {
+        "_token_":{
+          "type": "string",
+          "minLength" : 1,
+          "title": "توکن احراز هویت",
+          "description": "توکن احراز هویت"
+        },
+        "_token_issuer_": {
+          "type": "integer",
+          "enum": [0, 1]
+        }
+      },
+      "required": ["_token_issuer_","_token_"],
+      "additionalProperties": false
+    },
+    "query": {
+      "type": "object",
+      "properties": {
+        "scVoucherHash": {
+            "type": "array",
+            "title": "کد تخفیف برای فراخوانی سرویس کال",
+            "description": "کد تخفیف برای فراخوانی سرویس کال",
+            "items": {
+                "type": "string"
+            }
+        },
+        "scApiKey": {
+            "type": "string",
+            "title": "توکن برای فراخوانی سرویس کال"
+        },
+        "guildCode": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number"
+        },
+        "invoiceId": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        },
+        "currencyCode": {
+          "type": "string"
+        },
+        "uniqueId": {
+          "type": "string"
+        },
+        "wallet": {
+          "type": "string"
+        }
+      },
+      "required": ["amount", "invoiceId", "description"],
+      "additionalProperties": false
+      }
+  },
+
+  "listTransferByInvoice": {
+    "header": {
+      "type": "object",
+      "properties": {
+        "_token_":{
+          "type": "string",
+          "minLength" : 1,
+          "title": "توکن احراز هویت",
+          "description": "توکن احراز هویت"
+        },
+        "_token_issuer_": {
+          "type": "integer",
+          "enum": [0, 1]
+        }
+      },
+      "required": ["_token_issuer_","_token_"],
+      "additionalProperties": false
+    },
+    "query": {
+          "type": "object",
+          "properties": {
+              "scVoucherHash": {
+                  "type": "array",
+                  "title": "کد تخفیف برای فراخوانی سرویس کال",
+                  "description": "کد تخفیف برای فراخوانی سرویس کال",
+                  "items": {
+                      "type": "string"
+                  }
+              },
+              "scApiKey": {
+                  "type": "string",
+                  "title": "توکن برای فراخوانی سرویس کال"
+              },
+            "invoiceId": {
+              "type": "integer"
+            },
+            "guildCode": {
+              "type": "string"
+            },
+            "wallet": {
+              "type": "string"
+            },
+            "offset": {
+              "type": "integer",
+              "minimum": 0,
+              "description" : "شماره صفحه که باید به صورت پارامتر وارد شود. مقدار پیش فرض صفر است."
+            },
+            "size" : {
+              "type": "integer",
+              "minimum": 1,
+              "description" : "تعداد آیتم بازگشتی که باید به صورت پارامتر وارد شود و مقدار پیش فرض آن 50 است."
+            },
+            "fromAmount": {
+              "type": "number",
+              "minimum": 0
+            },
+            "toAmount": {
+              "type": "number",
+              "minimum": 0
+            },
+            "currencyCode": {
+              "type": "string"
+            },
+            "uniqueId": {
+              "type": "string"
+            },
+            "fromDate": {
+              "type": "string",
+              "title": "از تاریخ صدور ( به صورت شمسی )",
+              "pattern": "^[1][3-5][0-9]{2}\/([1-9]|0[1-9]|1[0-2])\/([1-2][0-9]|0[1-9]|3[0-1]|[1-9])( (2[0-3]|[01]?[0-9]):[0-5]?[0-9](:[0-5]?[0-9])?)?$",
+              "pattern_description": "تاریخ به صورت yyyy/mm/dd وارد شود"
+            },
+            "toDate": {
+              "type": "string",
+              "title": "تا تاریخ صدور ( به صورت شمسی )",
+              "pattern": "^[1][3-5][0-9]{2}\/([1-9]|0[1-9]|1[0-2])\/([1-2][0-9]|0[1-9]|3[0-1]|[1-9])( (2[0-3]|[01]?[0-9]):[0-5]?[0-9](:[0-5]?[0-9])?)?$",
+              "pattern_description": "تاریخ به صورت yyyy/mm/dd وارد شود"
+            }
+          },
+      "required": ["offset", "size"],
+      "additionalProperties": false
+      }
+  },
+
+  "getWalletAccountBill": {
+    "header": {
+      "type": "object",
+      "properties": {
+        "_token_":{
+          "type": "string",
+          "minLength" : 1,
+          "title": "توکن احراز هویت",
+          "description": "توکن احراز هویت"
+        },
+        "_token_issuer_": {
+          "type": "integer",
+          "enum": [0, 1]
+        }
+      },
+      "required": ["_token_issuer_","_token_"],
+      "additionalProperties": false
+    },
+    "query": {
+          "type": "object",
+          "properties": {
+              "scVoucherHash": {
+                  "type": "array",
+                  "title": "کد تخفیف برای فراخوانی سرویس کال",
+                  "description": "کد تخفیف برای فراخوانی سرویس کال",
+                  "items": {
+                      "type": "string"
+                  }
+              },
+              "scApiKey": {
+                  "type": "string",
+                  "title": "توکن برای فراخوانی سرویس کال"
+              },
+            "dateFrom": {
+              "title": "حد پایین تاریخ انقضا با فرمت yyyy/mm/dd",
+              "pattern": "^[1][3-5][0-9]{2}\/([1-9]|0[1-9]|1[0-2])\/([1-2][0-9]|0[1-9]|3[0-1]|[1-9])( (2[0-3]|[01]?[0-9]):[0-5]?[0-9](:[0-5]?[0-9])?)?$",
+              "pattern_description": "تاریخ به صورت yyyy/mm/dd وارد شود"
+            },
+            "dateTo": {
+              "title": "حد بالای تاریخ انقضا با فرمت yyyy/mm/dd",
+              "pattern": "^[1][3-5][0-9]{2}\/([1-9]|0[1-9]|1[0-2])\/([1-2][0-9]|0[1-9]|3[0-1]|[1-9])( (2[0-3]|[01]?[0-9]):[0-5]?[0-9](:[0-5]?[0-9])?)?$",
+              "pattern_description": "تاریخ به صورت yyyy/mm/dd وارد شود"
+            },
+            "description": {
+              "type": "string"
+            },
+            "amountFrom": {
+              "type": "number"
+            },
+            "amountTo": {
+              "type": "number"
+            },
+            "block": {
+              "type": "string"
+            },
+            "wallet": {
+              "type": "string"
+            },
+            "currencyCode": {
+              "type": "string"
+            },
+            "debtor": {
+              "type": "string"
+            },
+            "offset": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "size": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+      "required": ["offset", "size"],
+      "additionalProperties": false
+      }
+  },
+
+  "getGuildAccountBill": {
+    "header": {
+      "type": "object",
+      "properties": {
+        "_token_":{
+          "type": "string",
+          "minLength" : 1,
+          "title": "توکن احراز هویت",
+          "description": "توکن احراز هویت"
+        },
+        "_token_issuer_": {
+          "type": "integer",
+          "enum": [0, 1]
+        }
+      },
+      "required": ["_token_issuer_","_token_"],
+      "additionalProperties": false
+    },
+    "query": {
+          "type": "object",
+          "properties": {
+            "scVoucherHash": {
+                "type": "array",
+                "title": "کد تخفیف برای فراخوانی سرویس کال",
+                "description": "کد تخفیف برای فراخوانی سرویس کال",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "scApiKey": {
+                "type": "string",
+                "title": "توکن برای فراخوانی سرویس کال"
+            },
+            "dateFrom": {
+              "title": "حد پایین تاریخ انقضا با فرمت yyyy/mm/dd",
+              "pattern": "^[1][3-5][0-9]{2}\/([1-9]|0[1-9]|1[0-2])\/([1-2][0-9]|0[1-9]|3[0-1]|[1-9])( (2[0-3]|[01]?[0-9]):[0-5]?[0-9](:[0-5]?[0-9])?)?$",
+              "pattern_description": "تاریخ به صورت yyyy/mm/dd وارد شود"
+            },
+            "dateTo": {
+              "title": "حد بالای تاریخ انقضا با فرمت yyyy/mm/dd",
+              "pattern": "^[1][3-5][0-9]{2}\/([1-9]|0[1-9]|1[0-2])\/([1-2][0-9]|0[1-9]|3[0-1]|[1-9])( (2[0-3]|[01]?[0-9]):[0-5]?[0-9](:[0-5]?[0-9])?)?$",
+              "pattern_description": "تاریخ به صورت yyyy/mm/dd وارد شود"
+            },
+            "description": {
+              "type": "string"
+            },
+            "amountFrom": {
+              "type": "number"
+            },
+            "amountTo": {
+              "type": "number"
+            },
+            "block": {
+              "type": "string"
+            },
+            "guildCode": {
+              "type": "string"
+            },
+            "currencyCode": {
+              "type": "string"
+            },
+            "debtor": {
+              "type": "string"
+            },
+            "offset": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "size": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+      "required": ["offset", "size"],
+      "additionalProperties": false
+      }
+  },
+
+  "getAccountBillAsFile": {
+    "header": {
+      "type": "object",
+      "properties": {
+        "_token_":{
+          "type": "string",
+          "minLength" : 1,
+          "title": "توکن احراز هویت",
+          "description": "توکن احراز هویت"
+        },
+        "_token_issuer_": {
+          "type": "integer",
+          "enum": [0, 1]
+        }
+      },
+      "required": ["_token_issuer_","_token_"],
+      "additionalProperties": false
+    },
+    "query": {
+          "type": "object",
+          "properties": {
+            "scVoucherHash": {
+                "type": "array",
+                "title": "کد تخفیف برای فراخوانی سرویس کال",
+                "description": "کد تخفیف برای فراخوانی سرویس کال",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "scApiKey": {
+                "type": "string",
+                "title": "توکن برای فراخوانی سرویس کال"
+            },
+            "dateFrom": {
+              "title": "حد پایین تاریخ انقضا با فرمت yyyy/mm/dd",
+              "pattern": "^[1][3-5][0-9]{2}\/([1-9]|0[1-9]|1[0-2])\/([1-2][0-9]|0[1-9]|3[0-1]|[1-9])( (2[0-3]|[01]?[0-9]):[0-5]?[0-9](:[0-5]?[0-9])?)?$",
+              "pattern_description": "تاریخ به صورت yyyy/mm/dd وارد شود"
+            },
+            "dateTo": {
+              "title": "حد بالای تاریخ انقضا با فرمت yyyy/mm/dd",
+              "pattern": "^[1][3-5][0-9]{2}\/([1-9]|0[1-9]|1[0-2])\/([1-2][0-9]|0[1-9]|3[0-1]|[1-9])( (2[0-3]|[01]?[0-9]):[0-5]?[0-9](:[0-5]?[0-9])?)?$",
+              "pattern_description": "تاریخ به صورت yyyy/mm/dd وارد شود"
+            },
+            "description": {
+              "type": "string"
+            },
+            "amountFrom": {
+              "type": "number"
+            },
+            "amountTo": {
+              "type": "number"
+            },
+            "block": {
+              "type": "string"
+            },
+            "guildCode": {
+              "type": "string"
+            },
+            "currencyCode": {
+              "type": "string"
+            },
+            "debtor": {
+              "type": "string"
+            },
+            "lastNRows": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "callbackUrl": {
+              "type": "string"
+            }
+          },
+      "anyOf" : [
+        {
+          "required": ["dateFrom"]
+        },
+        {
+          "required": ["dateTo"]
+        }
+      ],
+      "additionalProperties": false
+      }
+  },
+
+  "cardToCardList": {
+    "header": {
+      "type": "object",
+      "properties": {
+        "_token_":{
+          "type": "string",
+          "minLength" : 1,
+          "title": "توکن احراز هویت",
+          "description": "توکن احراز هویت"
+        },
+        "_token_issuer_": {
+          "type": "integer",
+          "enum": [0, 1]
+        }
+      },
+      "required": ["_token_issuer_","_token_"],
+      "additionalProperties": false
+    },
+    "query": {
+          "type": "object",
+          "properties": {
+            "scVoucherHash": {
+                "type": "array",
+                "title": "کد تخفیف برای فراخوانی سرویس کال",
+                "description": "کد تخفیف برای فراخوانی سرویس کال",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "scApiKey": {
+                "type": "string",
+                "title": "توکن برای فراخوانی سرویس کال"
+            },
+            "offset": {
+              "type": "integer",
+              "minimum": 0,
+              "description" : "شماره صفحه که باید به صورت پارامتر وارد شود. مقدار پیش فرض صفر است."
+            },
+            "size" : {
+              "type": "integer",
+              "minimum": 1,
+              "description" : "تعداد آیتم بازگشتی که باید به صورت پارامتر وارد شود و مقدار پیش فرض آن 50 است."
+            },
+            "canEdit": {
+              "type": "string"
+            },
+            "canceled": {
+              "type": "string"
+            },
+            "statusCode": {
+              "type": "string",
+              "enum": ["CARD_TO_CARD_STATUS_SENDING", "CARD_TO_CARD_STATUS_SUCCESSFUL", "CARD_TO_CARD_STATUS_FAILED",  "CARD_TO_CARD_STATUS_CREATED"]
+            },
+            "causeCode": {
+              "type": "string",
+              "enum": ["CASHOUT_CAUSE_TYPE_INVOICE", "CASHOUT_CAUSE_TYPE_SETTLEMENT"]
+            },
+            "causeId": {
+              "type": "string"
+            },
+            "fromAmount": {
+              "type": "number",
+              "minimum": 0
+            },
+            "toAmount": {
+              "type": "number",
+              "minimum": 0
+            },
+            "uniqueId": {
+              "type": "string"
+            },
+            "fromDate": {
+              "type": "string",
+              "title": "از تاریخ صدور ( به صورت شمسی )",
+              "pattern": "^[1][3-5][0-9]{2}\/([1-9]|0[1-9]|1[0-2])\/([1-2][0-9]|0[1-9]|3[0-1]|[1-9])( (2[0-3]|[01]?[0-9]):[0-5]?[0-9](:[0-5]?[0-9])?)?$",
+              "pattern_description": "تاریخ به صورت yyyy/mm/dd وارد شود"
+            },
+            "toDate": {
+              "type": "string",
+              "title": "تا تاریخ صدور ( به صورت شمسی )",
+              "pattern": "^[1][3-5][0-9]{2}\/([1-9]|0[1-9]|1[0-2])\/([1-2][0-9]|0[1-9]|3[0-1]|[1-9])( (2[0-3]|[01]?[0-9]):[0-5]?[0-9](:[0-5]?[0-9])?)?$",
+              "pattern_description": "تاریخ به صورت yyyy/mm/dd وارد شود"
+            },
+            "referenceNumber": {
+              "type": "string"
+            }
+          },
+      "required": ["offset", "size"],
+      "additionalProperties": false
+      }
+  },
+
+  "updateCardToCard": {
+    "header": {
+      "type": "object",
+      "properties": {
+        "_token_":{
+          "type": "string",
+          "minLength" : 1,
+          "title": "توکن احراز هویت",
+          "description": "توکن احراز هویت"
+        },
+        "_token_issuer_": {
+          "type": "integer",
+          "enum": [0, 1]
+        }
+      },
+      "required": ["_token_issuer_","_token_"],
+      "additionalProperties": false
+    },
+    "form_params": {
+          "type": "object",
+          "properties": {
+            "scVoucherHash": {
+                "type": "array",
+                "title": "کد تخفیف برای فراخوانی سرویس کال",
+                "description": "کد تخفیف برای فراخوانی سرویس کال",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "scApiKey": {
+                "type": "string",
+                "title": "توکن برای فراخوانی سرویس کال"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "cardNumber": {
+              "type": "string"
+            }
+          },
+      "required": ["id", "cardNumber"],
+      "additionalProperties": false
+    }
+  }
+}
