@@ -15,6 +15,7 @@ use Pod\Base\Service\ApiRequestHandler;
 class VirtualAccountService extends BaseService
 {
     private $header;
+    private static $jsonSchema;
     private static $virtualAccountApi;
     private static $baseUri;
     private static $serviceCallProductId;
@@ -43,7 +44,7 @@ class VirtualAccountService extends BaseService
 
         $httpQuery = self::buildHttpQuery($params);
 
-        self::validateOption($apiName, $option);
+        self::validateOption($option, self::$jsonSchema[$apiName]);
 
         return self::$baseUri['PRIVATE-CALL-ADDRESS'] . self::$virtualAccountApi[$apiName]['subUri'] . '?' . $httpQuery . PHP_EOL;
     }
@@ -58,7 +59,7 @@ class VirtualAccountService extends BaseService
 
         $httpQuery = self::buildHttpQuery($params);
 
-        self::validateOption($apiName, $option);
+        self::validateOption($option, self::$jsonSchema[$apiName]);
 
         return self::$baseUri['PRIVATE-CALL-ADDRESS'] . self::$virtualAccountApi[$apiName]['subUri'] . '?' . $httpQuery . PHP_EOL;
     }
@@ -81,7 +82,7 @@ class VirtualAccountService extends BaseService
             'headers' => $header,
             $paramKey => $params,
         ];
-        self::validateOption($apiName, $option, $paramKey);
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
 
         # set service call product Id
         $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
@@ -131,7 +132,7 @@ class VirtualAccountService extends BaseService
             $paramKey => $params,
         ];
 
-        self::validateOption($apiName, $option, $paramKey);
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
 
 
         # set service call product Id
@@ -173,7 +174,7 @@ class VirtualAccountService extends BaseService
             'query' => $params,
         ];
 
-        self::validateOption($apiName, $option);
+        self::validateOption($option, self::$jsonSchema[$apiName]);
 
         foreach ($params['guildAmount'] as $guildAmount){
             $params['guildCode'][] = $guildAmount['guildCode'];
@@ -224,7 +225,7 @@ class VirtualAccountService extends BaseService
             $paramKey => $params,
         ];
 
-        self::validateOption($apiName, $option, $paramKey);
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
 
         # set service call product Id
         $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
@@ -265,7 +266,7 @@ class VirtualAccountService extends BaseService
             'headers' => $header,
             $paramKey => $params,
         ];
-        self::validateOption($apiName, $option, $paramKey);
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
 
         # set service call product Id
         $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
@@ -306,7 +307,7 @@ class VirtualAccountService extends BaseService
             $paramKey => $params,
         ];
 
-        self::validateOption($apiName, $option, $paramKey);
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
 
         # set service call product Id
         $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
@@ -347,7 +348,7 @@ class VirtualAccountService extends BaseService
             $paramKey => $params,
         ];
 
-        self::validateOption($apiName, $option, $paramKey);
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
 
         # set service call product Id
         $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
@@ -388,7 +389,7 @@ class VirtualAccountService extends BaseService
             'headers' => $header,
             $paramKey => $params,
         ];
-        self::validateOption($apiName, $option, $paramKey);
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
 
         # set service call product Id
         $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
@@ -429,7 +430,7 @@ class VirtualAccountService extends BaseService
             'headers' => $header,
             $paramKey => $params,
         ];
-        self::validateOption($apiName, $option, $paramKey);
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
 
         # set service call product Id
         $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
@@ -470,7 +471,7 @@ class VirtualAccountService extends BaseService
             $paramKey => $params,
         ];
 
-        self::validateOption($apiName, $option, $paramKey);
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
 
         # set service call product Id
         $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
@@ -511,7 +512,7 @@ class VirtualAccountService extends BaseService
             $paramKey => $params,
         ];
 
-        self::validateOption($apiName, $option, $paramKey);
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
 
         # set service call product Id
         $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
@@ -552,7 +553,7 @@ class VirtualAccountService extends BaseService
             $paramKey => $params,
         ];
 
-        self::validateOption($apiName, $option, $paramKey);
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
 
         # set service call product Id
         $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
@@ -593,7 +594,7 @@ class VirtualAccountService extends BaseService
             $paramKey => $params,
         ];
 
-        self::validateOption($apiName, $option, $paramKey);
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
 
         # set service call product Id
         $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
@@ -634,7 +635,7 @@ class VirtualAccountService extends BaseService
             $paramKey => $params,
         ];
 
-        self::validateOption($apiName, $option, $paramKey);
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
 
         # set service call product Id
         $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
@@ -675,7 +676,7 @@ class VirtualAccountService extends BaseService
             $paramKey => $params,
         ];
 
-        self::validateOption($apiName, $option, $paramKey);
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
 
         # set service call product Id
         $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
@@ -716,7 +717,7 @@ class VirtualAccountService extends BaseService
             $paramKey => $params,
         ];
 
-        self::validateOption($apiName, $option, $paramKey);
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
 
         # set service call product Id
         $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
@@ -757,7 +758,7 @@ class VirtualAccountService extends BaseService
             $paramKey => $params,
         ];
 
-        self::validateOption($apiName, $option, $paramKey);
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
 
         # set service call product Id
         $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
@@ -798,7 +799,7 @@ class VirtualAccountService extends BaseService
             $paramKey => $params,
         ];
 
-        self::validateOption($apiName, $option, $paramKey);
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
 
         # set service call product Id
         $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
@@ -839,7 +840,7 @@ class VirtualAccountService extends BaseService
             $paramKey => $params,
         ];
 
-        self::validateOption($apiName, $option, $paramKey);
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
 
         # set service call product Id
         $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
