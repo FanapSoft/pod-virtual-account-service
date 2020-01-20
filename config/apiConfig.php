@@ -98,7 +98,7 @@ return [
     'listTransferByInvoice' => [
         'baseUri' => 'PLATFORM-ADDRESS',
         'subUri'  => 'nzh/doServiceCall',
-        'method' => 'POST'
+        'method' => 'GET'
     ],
 
     'getWalletAccountBill' => [
