@@ -66,34 +66,7 @@ class VirtualAccountService extends BaseService
 
     public function issueCreditInvoiceAndGetHash($params) {
         $apiName = 'issueCreditInvoiceAndGetHash';
-        $optionHasArray = false;
-        $header = $this->header;
-
-        if(isset($params['token'])) {
-            $header["_token_"] = $params['token'];
-            unset($params['token']);
-        }
-
-        $method = self::$virtualAccountApi[$apiName]['method'];
-        $paramKey = $method == 'GET' ? 'query' : 'form_params';
-
-        array_walk_recursive($params, 'self::prepareData');
-        $option = [
-            'headers' => $header,
-            $paramKey => $params,
-        ];
-        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
-
-        # set service call product Id
-        $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
-
-        # handle list and array parameters dont send list parameters with bracket and array parameters with indexed bracket
-        if (isset($params['scVoucherHash'])) {
-            $option['withoutBracketParams'] =  $option[$paramKey];
-            unset($option[$paramKey]);
-            $optionHasArray = true;
-            $method = 'GET';
-        }
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
 
         return ApiRequestHandler::Request(
             self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
@@ -114,36 +87,7 @@ class VirtualAccountService extends BaseService
 
     public function verifyCreditInvoice($params) {
         $apiName = 'verifyCreditInvoice';
-        $optionHasArray = false;
-        $header = $this->header;
-
-        if(isset($params['token'])) {
-            $header["_token_"] = $params['token'];
-            unset($params['token']);
-        }
-
-        $method = self::$virtualAccountApi[$apiName]['method'];
-        $paramKey = $method == 'GET' ? 'query' : 'form_params';
-
-        array_walk_recursive($params, 'self::prepareData');
-
-        $option = [
-            'headers' => $header,
-            $paramKey => $params,
-        ];
-
-        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
-
-
-        # set service call product Id
-        $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
-
-        if (isset($params['scVoucherHash'])) {
-            $option['withoutBracketParams'] =  $option[$paramKey];
-            unset($option[$paramKey]);
-            $optionHasArray = true;
-            $method = 'GET';
-        }
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
 
         return ApiRequestHandler::Request(
             self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
@@ -208,34 +152,7 @@ class VirtualAccountService extends BaseService
 
     public function transferFromOwnAccountsList($params) {
         $apiName = 'transferFromOwnAccountsList';
-        $optionHasArray = false;
-        $header = $this->header;
-
-        if(isset($params['token'])) {
-            $header["_token_"] = $params['token'];
-            unset($params['token']);
-        }
-
-        $method = self::$virtualAccountApi[$apiName]['method'];
-        $paramKey = $method == 'GET' ? 'query' : 'form_params';
-
-        array_walk_recursive($params, 'self::prepareData');
-        $option = [
-            'headers' => $header,
-            $paramKey => $params,
-        ];
-
-        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
-
-        # set service call product Id
-        $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
-
-        if (isset($params['scVoucherHash'])) {
-            $option['withoutBracketParams'] =  $option[$paramKey];
-            unset($option[$paramKey]);
-            $optionHasArray = true;
-            $method = 'GET';
-        }
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
 
         return ApiRequestHandler::Request(
             self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
@@ -249,34 +166,7 @@ class VirtualAccountService extends BaseService
 
     public function transferToContact($params) {
         $apiName = 'transferToContact';
-        $optionHasArray = false;
-        $header = $this->header;
-
-        if(isset($params['token'])) {
-            $header["_token_"] = $params['token'];
-            unset($params['token']);
-        }
-
-        $method = self::$virtualAccountApi[$apiName]['method'];
-        $paramKey = $method == 'GET' ? 'query' : 'form_params';
-
-        array_walk_recursive($params, 'self::prepareData');
-
-        $option = [
-            'headers' => $header,
-            $paramKey => $params,
-        ];
-        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
-
-        # set service call product Id
-        $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
-
-        if (isset($params['scVoucherHash'])) {
-            $option['withoutBracketParams'] =  $option[$paramKey];
-            unset($option[$paramKey]);
-            $optionHasArray = true;
-            $method = 'GET';
-        }
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
 
         return ApiRequestHandler::Request(
             self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
@@ -290,34 +180,7 @@ class VirtualAccountService extends BaseService
 
     public function transferToContactList($params) {
         $apiName = 'transferToContactList';
-        $optionHasArray = false;
-        $header = $this->header;
-
-        if(isset($params['token'])) {
-            $header["_token_"] = $params['token'];
-            unset($params['token']);
-        }
-
-        $method = self::$virtualAccountApi[$apiName]['method'];
-        $paramKey = $method == 'GET' ? 'query' : 'form_params';
-
-        array_walk_recursive($params, 'self::prepareData');
-        $option = [
-            'headers' => $header,
-            $paramKey => $params,
-        ];
-
-        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
-
-        # set service call product Id
-        $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
-
-        if (isset($params['scVoucherHash'])) {
-            $option['withoutBracketParams'] =  $option[$paramKey];
-            unset($option[$paramKey]);
-            $optionHasArray = true;
-            $method = 'GET';
-        }
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
 
         return ApiRequestHandler::Request(
             self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
@@ -331,34 +194,7 @@ class VirtualAccountService extends BaseService
 
     public function follow($params) {
         $apiName = 'follow';
-        $optionHasArray = false;
-        $header = $this->header;
-
-        if(isset($params['token'])) {
-            $header["_token_"] = $params['token'];
-            unset($params['token']);
-        }
-
-        $method = self::$virtualAccountApi[$apiName]['method'];
-        $paramKey = $method == 'GET' ? 'query' : 'form_params';
-
-        array_walk_recursive($params, 'self::prepareData');
-        $option = [
-            'headers' => $header,
-            $paramKey => $params,
-        ];
-
-        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
-
-        # set service call product Id
-        $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
-
-        if (isset($params['scVoucherHash'])) {
-            $option['withoutBracketParams'] =  $option[$paramKey];
-            unset($option[$paramKey]);
-            $optionHasArray = true;
-            $method = 'GET';
-        }
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
 
         return ApiRequestHandler::Request(
             self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
@@ -372,34 +208,7 @@ class VirtualAccountService extends BaseService
 
     public function getFollowers($params) {
         $apiName = 'getFollowers';
-        $optionHasArray = false;
-        $header = $this->header;
-
-        if(isset($params['token'])) {
-            $header["_token_"] = $params['token'];
-            unset($params['token']);
-        }
-
-        $method = self::$virtualAccountApi[$apiName]['method'];
-        $paramKey = $method == 'GET' ? 'query' : 'form_params';
-
-        array_walk_recursive($params, 'self::prepareData');
-
-        $option = [
-            'headers' => $header,
-            $paramKey => $params,
-        ];
-        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
-
-        # set service call product Id
-        $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
-
-        if (isset($params['scVoucherHash'])) {
-            $option['withoutBracketParams'] =  $option[$paramKey];
-            unset($option[$paramKey]);
-            $optionHasArray = true;
-            $method = 'GET';
-        }
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
 
         return ApiRequestHandler::Request(
             self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
@@ -413,34 +222,7 @@ class VirtualAccountService extends BaseService
 
     public function getBusiness($params) {
         $apiName = 'getBusiness';
-        $optionHasArray = false;
-        $header = $this->header;
-
-        if(isset($params['token'])) {
-            $header["_token_"] = $params['token'];
-            unset($params['token']);
-        }
-
-        $method = self::$virtualAccountApi[$apiName]['method'];
-        $paramKey = $method == 'GET' ? 'query' : 'form_params';
-
-        array_walk_recursive($params, 'self::prepareData');
-
-        $option = [
-            'headers' => $header,
-            $paramKey => $params,
-        ];
-        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
-
-        # set service call product Id
-        $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
-
-        if (isset($params['scVoucherHash'])) {
-            $option['withoutBracketParams'] =  $option[$paramKey];
-            unset($option[$paramKey]);
-            $optionHasArray = true;
-            $method = 'GET';
-        }
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
 
         return ApiRequestHandler::Request(
             self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
@@ -454,34 +236,7 @@ class VirtualAccountService extends BaseService
 
     public function transferToFollower($params) {
         $apiName = 'transferToFollower';
-        $optionHasArray = false;
-        $header = $this->header;
-
-        if(isset($params['token'])) {
-            $header["_token_"] = $params['token'];
-            unset($params['token']);
-        }
-
-        $method = self::$virtualAccountApi[$apiName]['method'];
-        $paramKey = $method == 'GET' ? 'query' : 'form_params';
-
-        array_walk_recursive($params, 'self::prepareData');
-        $option = [
-            'headers' => $header,
-            $paramKey => $params,
-        ];
-
-        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
-
-        # set service call product Id
-        $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
-
-        if (isset($params['scVoucherHash'])) {
-            $option['withoutBracketParams'] =  $option[$paramKey];
-            unset($option[$paramKey]);
-            $optionHasArray = true;
-            $method = 'GET';
-        }
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
 
         return ApiRequestHandler::Request(
             self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
@@ -495,34 +250,7 @@ class VirtualAccountService extends BaseService
 
     public function transferToFollowerAndCashout($params) {
         $apiName = 'transferToFollowerAndCashout';
-        $optionHasArray = false;
-        $header = $this->header;
-
-        if(isset($params['token'])) {
-            $header["_token_"] = $params['token'];
-            unset($params['token']);
-        }
-
-        $method = self::$virtualAccountApi[$apiName]['method'];
-        $paramKey = $method == 'GET' ? 'query' : 'form_params';
-
-        array_walk_recursive($params, 'self::prepareData');
-        $option = [
-            'headers' => $header,
-            $paramKey => $params,
-        ];
-
-        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
-
-        # set service call product Id
-        $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
-
-        if (isset($params['scVoucherHash'])) {
-            $option['withoutBracketParams'] =  $option[$paramKey];
-            unset($option[$paramKey]);
-            $optionHasArray = true;
-            $method = 'GET';
-        }
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
 
         return ApiRequestHandler::Request(
             self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
@@ -536,34 +264,7 @@ class VirtualAccountService extends BaseService
 
     public function transferToFollowerList($params) {
         $apiName = 'transferToFollowerList';
-        $optionHasArray = false;
-        $header = $this->header;
-
-        if(isset($params['token'])) {
-            $header["_token_"] = $params['token'];
-            unset($params['token']);
-        }
-
-        $method = self::$virtualAccountApi[$apiName]['method'];
-        $paramKey = $method == 'GET' ? 'query' : 'form_params';
-
-        array_walk_recursive($params, 'self::prepareData');
-        $option = [
-            'headers' => $header,
-            $paramKey => $params,
-        ];
-
-        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
-
-        # set service call product Id
-        $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
-
-        if (isset($params['scVoucherHash'])) {
-            $option['withoutBracketParams'] =  $option[$paramKey];
-            unset($option[$paramKey]);
-            $optionHasArray = true;
-            $method = 'GET';
-        }
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
 
         return ApiRequestHandler::Request(
             self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
@@ -577,34 +278,7 @@ class VirtualAccountService extends BaseService
 
     public function transferByInvoice($params) {
         $apiName = 'transferByInvoice';
-        $optionHasArray = false;
-        $header = $this->header;
-
-        if(isset($params['token'])) {
-            $header["_token_"] = $params['token'];
-            unset($params['token']);
-        }
-
-        $method = self::$virtualAccountApi[$apiName]['method'];
-        $paramKey = $method == 'GET' ? 'query' : 'form_params';
-
-        array_walk_recursive($params, 'self::prepareData');
-        $option = [
-            'headers' => $header,
-            $paramKey => $params,
-        ];
-
-        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
-
-        # set service call product Id
-        $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
-
-        if (isset($params['scVoucherHash'])) {
-            $option['withoutBracketParams'] =  $option[$paramKey];
-            unset($option[$paramKey]);
-            $optionHasArray = true;
-            $method = 'GET';
-        }
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
 
         return ApiRequestHandler::Request(
             self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
@@ -618,34 +292,7 @@ class VirtualAccountService extends BaseService
 
     public function listTransferByInvoice($params) {
         $apiName = 'listTransferByInvoice';
-        $optionHasArray = false;
-        $header = $this->header;
-
-        if(isset($params['token'])) {
-            $header["_token_"] = $params['token'];
-            unset($params['token']);
-        }
-
-        $method = self::$virtualAccountApi[$apiName]['method'];
-        $paramKey = $method == 'GET' ? 'query' : 'form_params';
-
-        array_walk_recursive($params, 'self::prepareData');
-        $option = [
-            'headers' => $header,
-            $paramKey => $params,
-        ];
-
-        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
-
-        # set service call product Id
-        $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
-
-        if (isset($params['scVoucherHash'])) {
-            $option['withoutBracketParams'] =  $option[$paramKey];
-            unset($option[$paramKey]);
-            $optionHasArray = true;
-            $method = 'GET';
-        }
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
 
         return ApiRequestHandler::Request(
             self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
@@ -659,34 +306,7 @@ class VirtualAccountService extends BaseService
 
     public function getWalletAccountBill($params) {
         $apiName = 'getWalletAccountBill';
-        $optionHasArray = false;
-        $header = $this->header;
-
-        if(isset($params['token'])) {
-            $header["_token_"] = $params['token'];
-            unset($params['token']);
-        }
-
-        $method = self::$virtualAccountApi[$apiName]['method'];
-        $paramKey = $method == 'GET' ? 'query' : 'form_params';
-
-        array_walk_recursive($params, 'self::prepareData');
-        $option = [
-            'headers' => $header,
-            $paramKey => $params,
-        ];
-
-        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
-
-        # set service call product Id
-        $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
-
-        if (isset($params['scVoucherHash'])) {
-            $option['withoutBracketParams'] =  $option[$paramKey];
-            unset($option[$paramKey]);
-            $optionHasArray = true;
-            $method = 'GET';
-        }
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
 
         return ApiRequestHandler::Request(
             self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
@@ -700,34 +320,7 @@ class VirtualAccountService extends BaseService
 
     public function getGuildAccountBill($params) {
         $apiName = 'getGuildAccountBill';
-        $optionHasArray = false;
-        $header = $this->header;
-
-        if(isset($params['token'])) {
-            $header["_token_"] = $params['token'];
-            unset($params['token']);
-        }
-
-        $method = self::$virtualAccountApi[$apiName]['method'];
-        $paramKey = $method == 'GET' ? 'query' : 'form_params';
-
-        array_walk_recursive($params, 'self::prepareData');
-        $option = [
-            'headers' => $header,
-            $paramKey => $params,
-        ];
-
-        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
-
-        # set service call product Id
-        $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
-
-        if (isset($params['scVoucherHash'])) {
-            $option['withoutBracketParams'] =  $option[$paramKey];
-            unset($option[$paramKey]);
-            $optionHasArray = true;
-            $method = 'GET';
-        }
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
 
         return ApiRequestHandler::Request(
             self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
@@ -741,34 +334,7 @@ class VirtualAccountService extends BaseService
 
     public function getAccountBillAsFile($params) {
         $apiName = 'getAccountBillAsFile';
-        $optionHasArray = false;
-        $header = $this->header;
-
-        if(isset($params['token'])) {
-            $header["_token_"] = $params['token'];
-            unset($params['token']);
-        }
-
-        $method = self::$virtualAccountApi[$apiName]['method'];
-        $paramKey = $method == 'GET' ? 'query' : 'form_params';
-
-        array_walk_recursive($params, 'self::prepareData');
-        $option = [
-            'headers' => $header,
-            $paramKey => $params,
-        ];
-
-        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
-
-        # set service call product Id
-        $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
-
-        if (isset($params['scVoucherHash'])) {
-            $option['withoutBracketParams'] =  $option[$paramKey];
-            unset($option[$paramKey]);
-            $optionHasArray = true;
-            $method = 'GET';
-        }
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
 
         return ApiRequestHandler::Request(
             self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
@@ -782,34 +348,7 @@ class VirtualAccountService extends BaseService
 
     public function cardToCardList($params) {
         $apiName = 'cardToCardList';
-        $optionHasArray = false;
-        $header = $this->header;
-
-        if(isset($params['token'])) {
-            $header["_token_"] = $params['token'];
-            unset($params['token']);
-        }
-
-        $method = self::$virtualAccountApi[$apiName]['method'];
-        $paramKey = $method == 'GET' ? 'query' : 'form_params';
-
-        array_walk_recursive($params, 'self::prepareData');
-        $option = [
-            'headers' => $header,
-            $paramKey => $params,
-        ];
-
-        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
-
-        # set service call product Id
-        $option[$paramKey]['scProductId'] = self::$serviceCallProductId[$apiName];
-
-        if (isset($params['scVoucherHash'])) {
-            $option['withoutBracketParams'] =  $option[$paramKey];
-            unset($option[$paramKey]);
-            $optionHasArray = true;
-            $method = 'GET';
-        }
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
 
         return ApiRequestHandler::Request(
             self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
@@ -823,18 +362,161 @@ class VirtualAccountService extends BaseService
 
     public function updateCardToCard($params) {
         $apiName = 'updateCardToCard';
-        $optionHasArray = false;
-        $header = $this->header;
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
 
+        return ApiRequestHandler::Request(
+            self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
+            $method,
+            self::$virtualAccountApi[$apiName]['subUri'],
+            $option,
+            false,
+            $optionHasArray
+        );
+    }
+
+    public function addWithdrawRulePlan($params) {
+        $apiName = 'addWithdrawRulePlan';
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
+
+        return ApiRequestHandler::Request(
+            self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
+            $method,
+            self::$virtualAccountApi[$apiName]['subUri'],
+            $option,
+            false,
+            $optionHasArray
+        );
+    }
+
+    public function withdrawRulePlanList($params) {
+        $apiName = 'withdrawRulePlanList';
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
+
+        return ApiRequestHandler::Request(
+            self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
+            $method,
+            self::$virtualAccountApi[$apiName]['subUri'],
+            $option,
+            false,
+            $optionHasArray
+        );
+    }
+
+    public function getLinkIssueWithdrawRuleByPlan($params) {
+        $apiName = 'getLinkIssueWithdrawRuleByPlan';
+        $header = $this->header;
+        array_walk_recursive($params, 'self::prepareData');
+        $paramKey = (self::$virtualAccountApi[$apiName]['method'] == 'GET') ? 'query' : 'form_params';
+
+        // if token is set replace it
         if(isset($params['token'])) {
             $header["_token_"] = $params['token'];
             unset($params['token']);
         }
 
+        $option = [
+            'headers' => $header,
+            $paramKey => $params,
+        ];
+
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
+        $httpQuery = self::buildHttpQuery($params);
+
+        return self::$baseUri['PRIVATE-CALL-ADDRESS'] . self::$virtualAccountApi[$apiName]['subUri'] . '?' . $httpQuery. PHP_EOL;
+    }
+
+    public function getLinkIssueWithdrawRule($params) {
+        $apiName = 'getLinkIssueWithdrawRule';
+        $header = $this->header;
+        array_walk_recursive($params, 'self::prepareData');
+        $paramKey = (self::$virtualAccountApi[$apiName]['method'] == 'GET') ? 'query' : 'form_params';
+
+        // if token is set replace it
+        if(isset($params['token'])) {
+            $header["_token_"] = $params['token'];
+            unset($params['token']);
+        }
+
+        $option = [
+            'headers' => $header,
+            $paramKey => $params,
+        ];
+
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
+        $httpQuery = self::buildHttpQuery($params);
+
+        return self::$baseUri['PRIVATE-CALL-ADDRESS'] . self::$virtualAccountApi[$apiName]['subUri'] . '?' . $httpQuery. PHP_EOL;
+    }
+
+    public function grantedWithdrawRuleList($params) {
+        $apiName = 'grantedWithdrawRuleList';
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
+
+        return ApiRequestHandler::Request(
+            self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
+            $method,
+            self::$virtualAccountApi[$apiName]['subUri'],
+            $option,
+            false,
+            $optionHasArray
+        );
+    }
+
+    public function revokeWithdrawRule($params) {
+        $apiName = 'revokeWithdrawRule';
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
+
+        return ApiRequestHandler::Request(
+            self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
+            $method,
+            self::$virtualAccountApi[$apiName]['subUri'],
+            $option,
+            false,
+            $optionHasArray
+        );
+    }
+
+    public function withdrawRuleUsageReport($params) {
+        $apiName = 'withdrawRuleUsageReport';
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
+
+        return ApiRequestHandler::Request(
+            self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
+            $method,
+            self::$virtualAccountApi[$apiName]['subUri'],
+            $option,
+            false,
+            $optionHasArray
+        );
+    }
+
+    public function PayInvoiceByCredit($params) {
+        $apiName = 'PayInvoiceByCredit';
+        list($method, $option, $optionHasArray) = $this->prepareDataBeforeSend($params, $apiName);
+
+        return ApiRequestHandler::Request(
+            self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
+            $method,
+            self::$virtualAccountApi[$apiName]['subUri'],
+            $option,
+            false,
+            $optionHasArray
+        );
+    }
+
+    private function prepareDataBeforeSend($params, $apiName){
+        $header = $this->header;
+        $optionHasArray = false;
+        array_walk_recursive($params, 'self::prepareData');
         $method = self::$virtualAccountApi[$apiName]['method'];
         $paramKey = $method == 'GET' ? 'query' : 'form_params';
 
-        array_walk_recursive($params, 'self::prepareData');
+        // if token is set replace it
+        if(isset($params['token'])) {
+            $header["_token_"] = $params['token'];
+            unset($params['token']);
+        }
+
         $option = [
             'headers' => $header,
             $paramKey => $params,
@@ -852,13 +534,6 @@ class VirtualAccountService extends BaseService
             $method = 'GET';
         }
 
-        return ApiRequestHandler::Request(
-            self::$baseUri[self::$virtualAccountApi[$apiName]['baseUri']],
-            $method,
-            self::$virtualAccountApi[$apiName]['subUri'],
-            $option,
-            false,
-            $optionHasArray
-        );
+        return [$method, $option, $optionHasArray];
     }
 }
